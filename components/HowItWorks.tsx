@@ -86,13 +86,14 @@ const TimelineStep = ({ step, index }: { step: Step; index: number }) => {
           isEven ? "md:order-2" : "md:order-1"
         }`}
       >
-        <motion.div style={{ y: smoothY }} className="relative aspect-[4/5] w-full">
-          <img
+        <div className="relative aspect-[4/5] w-full">
+          <motion.img
+            style={{ y: smoothY }}
             src={step.image}
             alt={step.title}
             className="absolute inset-0 w-full h-full object-cover scale-110"
           />
-        </motion.div>
+        </div>
       </div>
     </div>
   );
