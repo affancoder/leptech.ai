@@ -8,7 +8,10 @@ import { ArrowRight } from "lucide-react";
 const images = [
   "/img/lamp1.jpg",
   "/img/lamp2.jpg",
-  "/img/lamp3.jpg",
+  // "/img/lamp3.jpg",
+  "/img/lamp4.jpg",
+  "/img/lamp5.jpg",
+  "/img/lamp6.jpg",
 ];
 
 const UniquelyBottled = () => {
