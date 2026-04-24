@@ -26,7 +26,7 @@ const steps: Step[] = [
     title: "THE ART OF BLENDING",
     description:
       "Our master perfumers select from the finest global ingredients to create a unique olfactory profile. You'll experience multiple iterations until the fragrance perfectly reflects your story.",
-    image: "https://images.unsplash.com/photo-1615485290382-441e4d0c9cb5?q=80&w=1974&auto=format&fit=crop",
+    image: "/img/howitworks2.jpg",
   },
   {
     id: "step-3",
