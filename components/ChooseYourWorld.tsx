@@ -21,7 +21,10 @@ const ChooseYourWorld = () => {
       <div className="flex flex-col md:flex-row h-[420px] md:h-[500px] w-full">
         {/* LEFT PANEL (FEATURED) */}
         <div className="relative flex-[2.1] h-full overflow-visible group">
-          <div className="w-full h-full overflow-hidden">
+          <button 
+            className="w-full h-full overflow-hidden block relative text-left"
+            aria-label="View Weddings"
+          >
             <motion.div 
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
@@ -29,7 +32,7 @@ const ChooseYourWorld = () => {
               style={{ backgroundImage: "url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop')" }}
             />
             <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-          </div>
+          </button>
           
           {/* Overlay Content Block */}
           <div className="absolute bottom-0 left-0 w-[65%] bg-[#f1efe9] px-6 py-6 z-10 translate-y-[20%]">
@@ -50,7 +53,7 @@ const ChooseYourWorld = () => {
         </div>
 
         {/* CENTER PANEL */}
-        <div className="relative flex-[1] h-full overflow-hidden group border-l border-black/[0.05]">
+        <button className="relative flex-[1] h-full overflow-hidden group border-l border-black/[0.05] text-left">
           <motion.div 
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
@@ -65,10 +68,10 @@ const ChooseYourWorld = () => {
               CORPORATE & GIFTING
             </h3>
           </div>
-        </div>
+        </button>
 
         {/* RIGHT PANEL */}
-        <div className="relative flex-[1] h-full overflow-hidden group border-l border-black/[0.05]">
+        <button className="relative flex-[1] h-full overflow-hidden group border-l border-black/[0.05] text-left">
           <motion.div 
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
@@ -83,7 +86,7 @@ const ChooseYourWorld = () => {
               HOSPITALITY
             </h3>
           </div>
-        </div>
+        </button>
       </div>
     </section>
   );

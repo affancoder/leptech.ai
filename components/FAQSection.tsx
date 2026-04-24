@@ -39,37 +39,38 @@ const FAQSection = () => {
   ];
 
   return (
-    <div className="w-full bg-black py-20 px-6 md:px-12 lg:px-20">
-      <div className="max-w-7xl mx-auto bg-[#d9d9d9] rounded-[16px] p-10 font-mono">
-        <div className="flex flex-col md:flex-row gap-10">
+    <div className="w-full bg-black py-12 md:py-20 px-4 md:px-12 lg:px-20">
+      <div className="max-w-7xl mx-auto bg-[#d9d9d9] rounded-[16px] p-6 md:p-10 font-mono">
+        <div className="flex flex-col md:flex-row gap-8 md:gap-10">
           {/* Left Column */}
           <div className="w-full md:w-[120px] flex-shrink-0">
-            <h2 className="text-[24px] text-[#1a1a1a] uppercase tracking-wider">
+            <h2 className="text-[20px] md:text-[24px] text-[#1a1a1a] uppercase tracking-wider">
               FAQS
             </h2>
           </div>
 
           {/* Right Column */}
-          <div className="flex-1 flex justify-end pr-10 md:pr-20">
-            <div className="w-full max-w-xl">
+          <div className="flex-1 flex md:justify-end md:pr-10 lg:pr-20">
+            <div className="w-full md:max-w-xl">
               <div className="flex flex-col border-b border-black/40">
                 {faqs.map((faq, index) => (
                   <div
                     key={index}
-                    className="border-t border-[#bbb] first:border-t-0 py-6"
+                    className="border-t border-[#bbb] first:border-t-0"
                   >
                     {/* QUESTION ROW */}
                     <button
+                      type="button"
                       onClick={() =>
                         setOpenIndex(openIndex === index ? null : index)
                       }
-                      className="w-full flex items-start gap-6 text-left group"
+                      className="w-full flex items-start gap-4 md:gap-6 text-left group min-h-[44px] py-5 md:py-6 cursor-pointer relative z-10 select-none touch-manipulation"
                     >
-                      <span className="flex-1 text-[12px] md:text-[13px] text-[#1a1a1a] uppercase tracking-[0.1em] font-medium leading-relaxed">
+                      <span className="flex-1 text-[11px] md:text-[13px] text-[#1a1a1a] uppercase tracking-[0.1em] font-medium leading-relaxed pointer-events-none">
                         {faq.question}
                       </span>
 
-                      <div className="w-7 h-7 md:w-8 md:h-8 rounded-full border border-[#888] flex items-center justify-center flex-shrink-0">
+                      <div className="w-10 h-10 md:w-8 md:h-8 rounded-full border border-[#888] flex items-center justify-center flex-shrink-0 pointer-events-none">
                         <span className="text-[18px] text-[#1a1a1a] leading-none select-none">
                           {openIndex === index ? "−" : "+"}
                         </span>
@@ -86,7 +87,7 @@ const FAQSection = () => {
                           transition={{ duration: 0.3, ease: "easeInOut" }}
                           className="overflow-hidden"
                         >
-                          <p className="mt-4 text-[11px] md:text-[12px] text-[#555] leading-relaxed max-w-3xl">
+                          <p className="pb-6 text-[10px] md:text-[12px] text-[#555] leading-relaxed max-w-3xl">
                             {faq.answer}
                           </p>
                         </motion.div>

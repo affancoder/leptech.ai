@@ -7,6 +7,7 @@ import {
   useMotionValue,
   useSpring,
 } from "framer-motion";
+import { useLowEndDevice } from "@/hooks/useLowEndDevice";
 
 interface Slide {
   heading: string;
@@ -114,7 +115,7 @@ const HeroVideoSlider: React.FC = () => {
 
   return (
     <section
-      className="relative w-full h-screen overflow-hidden bg-black cursor-none group"
+      className="relative w-full h-screen overflow-hidden bg-black md:cursor-none group"
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
@@ -194,8 +195,8 @@ const HeroVideoSlider: React.FC = () => {
       <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/70 via-black/40 to-black/70 pointer-events-none" />
 
       {/* Hero Content */}
-      <div className="absolute bottom-10 left-6 md:bottom-16 md:left-20 z-20 flex flex-col items-start gap-4 max-w-xl text-left text-white">
-        <div className="max-w-3xl text-left">
+      <div className="absolute bottom-16 left-6 md:bottom-20 md:left-20 z-20 flex flex-col items-start gap-4 max-w-full md:max-w-xl text-left text-white pr-6 md:pr-0">
+        <div className="w-full">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSlide}
@@ -204,16 +205,16 @@ const HeroVideoSlider: React.FC = () => {
               exit={{ opacity: 0, y: -30 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              <h1 className="text-3xl md:text-2xl lg:text-2xl font-semibold text-white mb-2 leading-tight">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white mb-2 leading-tight tracking-wide">
                 BOTTLE THE MOMENT
               </h1>
 
-              <h2 className="text-xl md:text-2xl lg:text-2xl text-white mb-6 whitespace-nowrap">
+              <h2 className="text-lg md:text-xl lg:text-2xl text-white/90 mb-6 whitespace-normal md:whitespace-nowrap tracking-wider uppercase font-light">
                 BESPOKE SCENTS FOR UNFORGETTABLE MEMORIES
               </h2>
 
               <motion.div
-                className="pointer-events-auto mt-4 cursor-pointer"
+                className="pointer-events-auto mt-4 cursor-pointer hidden md:block"
                 whileHover="hover"
                 initial="initial"
                 animate="initial"
@@ -228,23 +229,11 @@ const HeroVideoSlider: React.FC = () => {
                       transition={{ duration: 0.4, ease: "easeInOut" }}
                       className="h-[2px] bg-white"
                     />
-                    {/* <motion.span
-                      initial={{ opacity: 0.3 }}
-                      animate={{ opacity: [0.3, 1, 0.3] }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                      className="text-white text-xs md:text-sm tracking-widest uppercase ml-4 whitespace-nowrap"
-                    >
-                      BEGIN THE JOURNEY...
-                    </motion.span> */}
                   </div>
                 </div>
               </motion.div>
 
-              <p className="text-sm mt-2 md:text-base text-white/80 mb-8 max-w-lg leading-relaxed">
+              <p className="text-xs md:text-sm lg:text-base text-white/70 mt-4 md:mt-2 mb-8 max-w-sm md:max-w-lg leading-relaxed font-light">
                 Expertly crafted fragrances that bring your stories to life,
                 from personal celebrations to corporate gifts
               </p>
@@ -261,13 +250,13 @@ const HeroVideoSlider: React.FC = () => {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute bottom-10 right-6 md:right-12 lg:right-16 z-30 text-white text-xs md:text-sm tracking-widest uppercase whitespace-nowrap pointer-events-none"
+        className="absolute bottom-10 right-6 md:right-12 lg:right-16 z-30 text-white text-[10px] md:text-xs lg:text-sm tracking-[0.2em] uppercase whitespace-nowrap pointer-events-none opacity-80"
       >
         BEGIN THE JOURNEY &#x25CB;
       </motion.div>
 
       {/* Navigation Arrows */}
-      <div className="absolute inset-0 z-30 flex items-center justify-between px-4 md:px-8 pointer-events-none">
+      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 z-30 flex items-center justify-between px-4 md:px-8 pointer-events-none">
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -281,16 +270,16 @@ const HeroVideoSlider: React.FC = () => {
             setIsPaused(false);
             setIsHovering(true);
           }}
-          className="pointer-events-auto p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all backdrop-blur-sm group border border-white/10"
+          className="pointer-events-auto p-2 md:p-3 rounded-full bg-white/5 hover:bg-white/20 text-white transition-all backdrop-blur-sm group border border-white/10"
           aria-label="Previous slide"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            strokeWidth={2}
+            strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6 group-hover:-translate-x-1 transition-transform"
+            className="w-5 h-5 md:w-6 md:h-6 group-hover:-translate-x-1 transition-transform"
           >
             <path
               strokeLinecap="round"
@@ -312,16 +301,16 @@ const HeroVideoSlider: React.FC = () => {
             setIsPaused(false);
             setIsHovering(true);
           }}
-          className="pointer-events-auto p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all backdrop-blur-sm group border border-white/10"
+          className="pointer-events-auto p-2 md:p-3 rounded-full bg-white/5 hover:bg-white/20 text-white transition-all backdrop-blur-sm group border border-white/10"
           aria-label="Next slide"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            strokeWidth={2}
+            strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6 group-hover:translate-x-1 transition-transform"
+            className="w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-1 transition-transform"
           >
             <path
               strokeLinecap="round"

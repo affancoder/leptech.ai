@@ -114,7 +114,7 @@ const Navbar: React.FC = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-black/95 backdrop-blur-xl overflow-hidden border-b border-white/10"
+            className="md:hidden bg-black/95 backdrop-blur-xl overflow-hidden border-b border-white/10 relative z-50"
           >
             <div className="px-6 py-8 flex flex-col gap-6 items-center text-center">
               <NavButtons isMobile closeMenu={() => setIsMobileMenuOpen(false)} />

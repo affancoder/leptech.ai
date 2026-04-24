@@ -59,17 +59,17 @@ const QuoteSection = () => {
           x: `calc(50vw - ${(activeIndex + 0.5) * WIDTH}vw)`,
         }}
         transition={{ duration: 0.7, ease: "easeInOut" }}
-        className="flex flex-nowrap absolute left-0"
+        className="flex flex-nowrap absolute left-0 z-10"
         style={{ width: `${quotes.length * WIDTH}vw` }}
       >
         {quotes.map((quote, index) => {
           const isActive = index === activeIndex;
 
           return (
-            <div
+            <button
               key={index}
               onClick={() => setActiveIndex(index)}
-              className="h-screen flex items-center px-12 md:px-16 lg:px-20 cursor-pointer select-none transition-all duration-700"
+              className="h-screen flex items-center px-12 md:px-16 lg:px-20 cursor-pointer select-none transition-all duration-700 text-left bg-transparent border-none outline-none appearance-none"
               style={{
                 width: `${WIDTH}vw`,
                 opacity: isActive ? 1 : 0.2,
@@ -98,7 +98,7 @@ const QuoteSection = () => {
                   </span>
                 </div>
               </div>
-            </div>
+            </button>
           );
         })}
       </motion.div>

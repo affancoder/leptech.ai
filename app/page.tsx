@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import FAQSection from "@/components/FAQSection";
 import UniquelyBottled from "@/components/UniquelyBottled";
 import ChooseYourWorld from "@/components/ChooseYourWorld";
+import HowItWorks from "@/components/HowItWorks";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <Navbar />
       <HeroVideoSlider />
       <ImageDisplay />
+      <HowItWorks />
       <ChooseYourWorld />
       <UniquelyBottled />
       <QuoteSection />
