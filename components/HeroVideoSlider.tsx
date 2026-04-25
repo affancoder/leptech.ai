@@ -43,7 +43,7 @@ const HeroVideoSlider: React.FC = () => {
     return () => clearInterval(timer);
   }, [nextSlide, isPaused, isPlaying]);
 
-  // ✅ CORE FIX: single video switching
+  // Single video switching (mobile safe)
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -60,14 +60,12 @@ const HeroVideoSlider: React.FC = () => {
     }
   }, [currentSlide]);
 
-  // Cursor movement
   const handleMouseMove = (e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
     mouseX.set(e.clientX - rect.left);
     mouseY.set(e.clientY - rect.top);
   };
 
-  // Play / Pause
   const togglePlayPause = () => {
     const video = videoRef.current;
     if (!video) return;
@@ -110,7 +108,7 @@ const HeroVideoSlider: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* VIDEO (single, mobile safe) */}
+      {/* Video */}
       <div className="absolute inset-0 z-0">
         <video
           ref={videoRef}
@@ -144,7 +142,6 @@ const HeroVideoSlider: React.FC = () => {
               BESPOKE SCENTS FOR UNFORGETTABLE MEMORIES
             </h2>
 
-            {/* White line */}
             <div className="hidden md:block h-[2px] w-full bg-white mb-4" />
 
             <p className="text-sm text-white/70">
@@ -153,6 +150,20 @@ const HeroVideoSlider: React.FC = () => {
           </motion.div>
         </AnimatePresence>
       </div>
+
+      {/* 🔥 BEGIN THE JOURNEY (RESTORED) */}
+      <motion.div
+        initial={{ opacity: 0.3 }}
+        animate={{ opacity: [0.3, 1, 0.3] }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="absolute bottom-10 right-6 md:right-12 lg:right-16 z-30 text-white text-[10px] md:text-xs lg:text-sm tracking-[0.2em] uppercase whitespace-nowrap pointer-events-none opacity-80"
+      >
+        BEGIN THE JOURNEY &#x25CB;
+      </motion.div>
 
       {/* Arrows */}
       <div className="absolute right-6 top-1/2 -translate-y-1/2 z-30 flex flex-col gap-4">
