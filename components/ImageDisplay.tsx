@@ -42,17 +42,17 @@ const ImageDisplay = () => {
   }, []);
 
   return (
-    <section ref={containerRef} className="h-[80vh] w-full">
+    <section ref={containerRef} className="h-[130vh] w-full">
       
       {/* Sticky Container */}
-      <div className="sticky top-0 h-screen w-full px-6 md:px-12 lg:px-20 py-20">
+      <div className="sticky top-0 h-screen w-full px-6 md:px-12 lg:px-20 py-12 md:py-16">
         
         <div className="relative w-full h-full rounded-xl overflow-hidden shadow-2xl ring-1 ring-black/5">
           
           {/* Image */}
           <div className="absolute inset-0">
             <Image
-              key={index} // forces clean change
+              key={index}
               src={images[index]}
               alt="Background"
               fill
