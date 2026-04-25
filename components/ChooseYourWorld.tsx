@@ -58,11 +58,11 @@ const ChooseYourWorld = () => {
             <motion.div
               key={index}
               onMouseEnter={() => !isMobile && setActive(index)}
-              className="relative w-full h-[280px] sm:h-[320px] md:h-full overflow-hidden group cursor-pointer"
+              className="relative w-full min-h-[260px] sm:min-h-[300px] md:h-full overflow-hidden group cursor-pointer flex-shrink-0"
               
               animate={
                 isMobile
-                  ? { flex: 1 }
+                  ? {} // ❌ disable flex animation on mobile
                   : {
                       flex:
                         active === null
@@ -76,7 +76,7 @@ const ChooseYourWorld = () => {
               }
               transition={{ duration: 0.6, ease: "easeInOut" }}
             >
-              {/* ✅ FIX: make image container relative */}
+              {/* Background Image */}
               <div className="absolute inset-0">
                 <motion.div
                   className="w-full h-full bg-cover bg-center"
@@ -86,7 +86,9 @@ const ChooseYourWorld = () => {
                       ? { scale: 1 }
                       : {
                           scale: isActive ? 1.05 : 1,
-                          filter: isOtherActive ? "brightness(0.7)" : "brightness(1)",
+                          filter: isOtherActive
+                            ? "brightness(0.7)"
+                            : "brightness(1)",
                         }
                   }
                   transition={{ duration: 0.6, ease: "easeOut" }}
