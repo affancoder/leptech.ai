@@ -42,7 +42,7 @@ const ImageDisplay = () => {
   }, []);
 
   return (
-    <section ref={containerRef} className="h-[200vh] w-full">
+    <section ref={containerRef} className="h-[80vh] w-full">
       
       {/* Sticky Container */}
       <div className="sticky top-0 h-screen w-full px-6 md:px-12 lg:px-20 py-20">
