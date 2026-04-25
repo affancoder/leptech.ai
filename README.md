@@ -1,37 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Modern Next.js Frontend Masterpiece
 
-## Getting Started
+A premium, high-performance frontend experience built with cutting-edge web technologies — crafted in **just one day** by **🔥 MD AFFAN ASGHAR**, a skilled full-stack web developer.
 
-First, run the development server:
+---
+
+## ✨ Overview
+
+This project is a **luxury-grade, modern frontend** built using **Next.js** with a strong focus on:
+
+* ⚡ Performance
+* 🎯 Precision UI/UX
+* 📱 Fully responsive design
+* 🎬 Smooth animations & interactions
+* 🧠 Clean architecture
+
+Designed to deliver a **premium digital experience**, this project reflects both **technical excellence** and **creative execution**.
+
+---
+
+## 🧑‍💻 Developer
+
+# 👑 MD AFFAN ASGHAR
+
+**Full Stack Web Developer**
+
+* 💡 Specializes in modern web applications
+* ⚙️ Expertise in frontend + backend systems
+* 🎨 Focus on high-end UI/UX experiences
+* 🚀 Builds scalable, performant products
+
+> ⚡ Built this complete frontend system in **just 1 day** — combining speed, precision, and creativity.
+
+---
+
+## 🛠️ Tech Stack
+
+* Next.js (App Router)
+* React.js
+* TypeScript
+* Tailwind CSS
+* Framer Motion
+* Lucide Icons
+
+---
+
+## 🎯 Key Features
+
+### 🎥 Cinematic Hero Section
+
+* Video slider with smooth transitions
+* Mobile-optimized playback handling
+* Custom cursor interaction
+
+### 🌌 Advanced Animations
+
+* Scroll-based parallax effects
+* Smooth hover scaling interactions
+* Timeline-based motion design
+
+### 📱 Responsive Design
+
+* Pixel-perfect across devices
+* Mobile-first optimization
+* Adaptive layouts
+
+### 🎨 Premium UI Components
+
+* Orbital animations
+* Interactive panels
+* Luxury typography
+
+---
+
+## ⚡ Performance Optimized
+
+* Optimized media loading
+* Efficient animation handling
+* Smooth experience on low-end devices
+
+---
+
+## 📂 Project Structure
+
+/app
+/components
+/hooks
+/public
+/styles
+
+---
+
+## 🚀 Getting Started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🏁 Final Note
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This is not just a project — it's a **proof of speed, skill, and design thinking**.
 
-## Learn More
+> Designed & Developed by **MD AFFAN ASGHAR** in just one day.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# leptech.ai
+⭐ Star this repo if you like it!
