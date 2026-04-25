@@ -7,39 +7,11 @@ import {
   useMotionValue,
   useSpring,
 } from "framer-motion";
-import { useLowEndDevice } from "@/hooks/useLowEndDevice";
-
-interface Slide {
-  heading: string;
-  subheading: string;
-  cta: string;
-}
 
 const videos: string[] = [
   "/videos/video1.mp4",
   "/videos/video2.mp4",
   "/videos/video3.mp4",
-];
-
-const slides: Slide[] = [
-  {
-    heading: "Build Your Brand",
-    subheading:
-      "Elevate your digital presence with cutting-edge design and technology.",
-    cta: "Get Started",
-  },
-  {
-    heading: "Innovate Faster",
-    subheading:
-      "Streamline your workflow with our powerful and intuitive platform.",
-    cta: "Learn More",
-  },
-  {
-    heading: "Design for Tomorrow",
-    subheading:
-      "Future-proof your business with scalable solutions built for growth.",
-    cta: "Contact Us",
-  },
 ];
 
 const HeroVideoSlider: React.FC = () => {
@@ -48,14 +20,13 @@ const HeroVideoSlider: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [isHovering, setIsHovering] = useState<boolean>(false);
 
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const springConfig = { damping: 25, stiffness: 150 };
-  const cursorX = useSpring(mouseX, springConfig);
-  const cursorY = useSpring(mouseY, springConfig);
+  const cursorX = useSpring(mouseX, { damping: 25, stiffness: 150 });
+  const cursorY = useSpring(mouseY, { damping: 25, stiffness: 150 });
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % videos.length);
@@ -65,64 +36,49 @@ const HeroVideoSlider: React.FC = () => {
     setCurrentSlide((prev) => (prev - 1 + videos.length) % videos.length);
   }, []);
 
-  // Auto-slide
+  // Auto slide
   useEffect(() => {
     if (isPaused || !isPlaying) return;
-
-    const timer = setInterval(() => {
-      nextSlide();
-    }, 5500);
-
+    const timer = setInterval(nextSlide, 5500);
     return () => clearInterval(timer);
   }, [nextSlide, isPaused, isPlaying]);
 
-  // ✅ FIX: force preload all videos
+  // ✅ CORE FIX: single video switching
   useEffect(() => {
-    videoRefs.current.forEach((video) => {
-      if (video) video.load();
-    });
-  }, []);
+    const video = videoRef.current;
+    if (!video) return;
 
-  // Mouse move handler
+    video.src = videos[currentSlide];
+    video.load();
+
+    video.muted = true;
+    video.playsInline = true;
+
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {});
+    }
+  }, [currentSlide]);
+
+  // Cursor movement
   const handleMouseMove = (e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
     mouseX.set(e.clientX - rect.left);
     mouseY.set(e.clientY - rect.top);
   };
 
-  // Play/Pause toggle
+  // Play / Pause
   const togglePlayPause = () => {
-    const currentVideo = videoRefs.current[currentSlide];
-    if (currentVideo) {
-      if (isPlaying) {
-        currentVideo.pause();
-      } else {
-        currentVideo.play().catch(() => {});
-      }
-      setIsPlaying(!isPlaying);
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (isPlaying) {
+      video.pause();
+    } else {
+      video.play().catch(() => {});
     }
+    setIsPlaying(!isPlaying);
   };
-
-  // ✅ FIX: control playback safely (mobile fix)
-  useEffect(() => {
-    videoRefs.current.forEach((video, index) => {
-      if (!video) return;
-
-      video.muted = true;
-      video.playsInline = true;
-
-      if (index === currentSlide) {
-        if (isPlaying) {
-          video.play().catch(() => {});
-        } else {
-          video.pause();
-        }
-      } else {
-        video.pause();
-        video.currentTime = 0;
-      }
-    });
-  }, [currentSlide, isPlaying]);
 
   return (
     <section
@@ -132,7 +88,7 @@ const HeroVideoSlider: React.FC = () => {
       onMouseLeave={() => setIsHovering(false)}
       onClick={togglePlayPause}
     >
-      {/* Custom Cursor */}
+      {/* Cursor */}
       <AnimatePresence>
         {isHovering && (
           <motion.div
@@ -146,81 +102,66 @@ const HeroVideoSlider: React.FC = () => {
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
           >
-            <div className="flex flex-col items-center justify-center text-white font-bold text-xs uppercase">
-              {isPlaying ? "PAUSE" : "PLAY"}
-            </div>
+            <span className="text-white text-xs uppercase">
+              {isPlaying ? "Pause" : "Play"}
+            </span>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Background Videos */}
-      <div className="absolute inset-0 z-0 bg-black">
-        <div className="absolute inset-0 bg-black z-[1]" />
-
-        {videos.map((video, index) => (
-          <video
-            key={video}
-            ref={(el) => {
-              videoRefs.current[index] = el;
-            }}
-            src={video}
-            muted
-            loop
-            playsInline
-            preload="auto" // ✅ FIX
-            poster="/images/fallback.jpg" // ✅ prevents black screen
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
-              index === currentSlide ? "opacity-100" : "opacity-0"
-            }`}
-            style={{ zIndex: index === currentSlide ? 2 : 0 }}
-          />
-        ))}
+      {/* VIDEO (single, mobile safe) */}
+      <div className="absolute inset-0 z-0">
+        <video
+          ref={videoRef}
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster="/images/fallback.jpg"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
       </div>
 
       {/* Overlay */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/70 via-black/40 to-black/70 pointer-events-none" />
+      <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/70 via-black/40 to-black/70" />
 
-      {/* Hero Content (UNCHANGED) */}
-      <div className="absolute bottom-16 left-6 md:bottom-20 md:left-20 z-20 flex flex-col items-start gap-4 max-w-full md:max-w-xl text-left text-white pr-6 md:pr-0">
+      {/* Content */}
+      <div className="absolute bottom-16 left-6 md:bottom-20 md:left-20 z-20 text-white max-w-xl">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -30 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.8 }}
           >
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white mb-2 leading-tight tracking-wide">
+            <h1 className="text-3xl md:text-4xl font-semibold mb-2">
               BOTTLE THE MOMENT
             </h1>
 
-            <h2 className="text-lg md:text-xl lg:text-2xl text-white/90 mb-6 uppercase font-light">
+            <h2 className="text-xl md:text-2xl mb-6 uppercase font-light">
               BESPOKE SCENTS FOR UNFORGETTABLE MEMORIES
             </h2>
 
-            {/* WHITE LINE (kept exactly) */}
-            <div className="hidden md:block mt-4">
-              <div className="h-[2px] w-full bg-white" />
-            </div>
+            {/* White line */}
+            <div className="hidden md:block h-[2px] w-full bg-white mb-4" />
 
-            <p className="text-xs md:text-sm lg:text-base text-white/70 mt-4 mb-8 max-w-lg leading-relaxed font-light">
-              Expertly crafted fragrances that bring your stories to life,
-              from personal celebrations to corporate gifts
+            <p className="text-sm text-white/70">
+              Expertly crafted fragrances that bring your stories to life.
             </p>
           </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* Right Navigation Arrows (KEPT) */}
-      <div className="absolute right-6 md:right-8 top-1/2 -translate-y-1/2 z-30 flex flex-col gap-4">
+      {/* Arrows */}
+      <div className="absolute right-6 top-1/2 -translate-y-1/2 z-30 flex flex-col gap-4">
         <button
           onClick={(e) => {
             e.stopPropagation();
             prevSlide();
           }}
-          className="p-3 rounded-full bg-white/10 hover:bg-white/30 text-white backdrop-blur"
+          className="p-3 bg-white/10 rounded-full text-white"
         >
           ◀
         </button>
@@ -229,13 +170,13 @@ const HeroVideoSlider: React.FC = () => {
             e.stopPropagation();
             nextSlide();
           }}
-          className="p-3 rounded-full bg-white/10 hover:bg-white/30 text-white backdrop-blur"
+          className="p-3 bg-white/10 rounded-full text-white"
         >
           ▶
         </button>
       </div>
 
-      {/* Dots (KEPT) */}
+      {/* Dots */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex gap-3">
         {videos.map((_, index) => (
           <button
@@ -244,7 +185,7 @@ const HeroVideoSlider: React.FC = () => {
               e.stopPropagation();
               setCurrentSlide(index);
             }}
-            className={`h-2 rounded-full transition-all ${
+            className={`h-2 rounded-full ${
               index === currentSlide ? "w-8 bg-white" : "w-2 bg-white/40"
             }`}
           />
