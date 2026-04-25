@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
@@ -8,18 +8,37 @@ import { ArrowRight } from "lucide-react";
 const images = [
   "/img/lamp1.jpg",
   "/img/lamp2.jpg",
-  // "/img/lamp3.jpg",
   "/img/lamp4.jpg",
   "/img/lamp5.jpg",
   "/img/lamp6.jpg",
 ];
 
 const UniquelyBottled = () => {
-  const totalItems = 10;
-  const radius = 350; // Radius in pixels for desktop
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setIsMobile(width < 640);
+      setIsTablet(width >= 640 && width < 1024);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const totalItems = isMobile ? 6 : isTablet ? 8 : 10;
+
+  const radius = isMobile
+    ? 140
+    : isTablet
+    ? 220
+    : 350;
 
   return (
-    <section className="relative w-full min-h-[110vh] bg-[#f5f5f5] flex items-center justify-center overflow-hidden py-20">
+    <section className="relative w-full min-h-[90vh] md:min-h-[110vh] bg-[#f5f5f5] flex items-center justify-center overflow-hidden py-20">
       
       {/* Orbital Wheel Container */}
       <motion.div 
@@ -38,12 +57,14 @@ const UniquelyBottled = () => {
                   transform: `rotate(${angle}deg) translateY(-${radius}px) rotate(-${angle}deg)`,
                 }}
               >
-                {/* Individual Card with Counter-Rotation for Content Stability */}
                 <motion.div
                   animate={{ rotate: -360 }}
                   transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
                   whileHover={{ scale: 1.05, zIndex: 10 }}
-                  className="w-32 md:w-40 h-24 md:h-28 rounded-lg overflow-hidden shadow-lg shadow-black/5 cursor-pointer bg-white border border-black/5"
+                  className={`
+                    ${isMobile ? "w-20 h-16" : isTablet ? "w-28 h-20" : "w-32 md:w-40 h-24 md:h-28"}
+                    rounded-lg overflow-hidden shadow-lg shadow-black/5 cursor-pointer bg-white border border-black/5
+                  `}
                 >
                   <Image
                     src={images[index % images.length]}
@@ -59,8 +80,8 @@ const UniquelyBottled = () => {
         </div>
       </motion.div>
 
-      {/* Central Content Block (Static & Centered) */}
-      <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-2xl bg-[#f5f5f5]/80 backdrop-blur-sm p-8 rounded-full">
+      {/* Central Content Block */}
+      <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-2xl bg-[#f5f5f5]/80 backdrop-blur-sm p-5 md:p-8 rounded-2xl md:rounded-full">
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -80,7 +101,6 @@ const UniquelyBottled = () => {
           Expertly crafted fragrances that bring your stories to life, from personal celebrations to corporate gifts. Discover the art of bespoke scents designed for unforgettable memories.
         </motion.p>
 
-        {/* CTA Row */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -88,17 +108,15 @@ const UniquelyBottled = () => {
           transition={{ delay: 0.2 }}
           className="mt-10 flex flex-col md:flex-row items-center gap-4"
         >
-          {/* Badge */}
           <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm border border-black/5">
             <span className="text-black font-semibold text-sm">E</span>
           </div>
 
-          {/* Input Field */}
           <div className="relative group">
             <input
               type="text"
               placeholder="HOW CAN YOU ELEVATE YOUR BIG DAY?"
-              className="w-[280px] md:w-[320px] h-10 px-4 pr-10 bg-white border border-black/10 rounded-lg text-[10px] md:text-xs tracking-wider uppercase focus:outline-none focus:border-black/30 transition-all placeholder:text-gray-400 shadow-sm"
+              className="w-[220px] sm:w-[260px] md:w-[320px] h-10 px-4 pr-10 bg-white border border-black/10 rounded-lg text-[10px] md:text-xs tracking-wider uppercase focus:outline-none focus:border-black/30 transition-all placeholder:text-gray-400 shadow-sm"
             />
             <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 group-hover:text-black transition-colors cursor-pointer">
               <ArrowRight size={16} />
